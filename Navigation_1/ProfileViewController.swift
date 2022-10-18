@@ -2,15 +2,21 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    let profile = ProfileHeaderView()
+
+    
+let profile = ProfileHeaderView()
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.backgroundColor = .systemMint
         view.addSubview(profile)
         setupProfileView()
+        
     }
-    
+
     func setupProfileView() {
         profile.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
