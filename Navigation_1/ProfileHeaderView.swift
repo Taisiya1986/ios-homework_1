@@ -89,15 +89,4 @@ class ProfileHeaderView: UIView {
         ])
         }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let newButton = UIButton()
-        newButton.backgroundColor = .systemPurple
-        newButton.setTitle("New button", for: .normal)
-        self.addSubview(newButton)
-        newButton.translatesAutoresizingMaskIntoConstraints = false
-        newButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        newButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
-    }
-    
 }
