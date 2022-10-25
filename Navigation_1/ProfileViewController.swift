@@ -15,9 +15,6 @@ class ProfileViewController: UIViewController {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.delegate = self
-        let hv = ProfileHeaderView()
-        hv.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 200)
-        tableView.tableHeaderView = hv
         arrayOfPosts = [firstPost, secondPost, thirdPost, fourthPost]
     }
     
@@ -42,6 +39,23 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         600
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            let headerView = ProfileHeaderView()
+            return headerView
+        } else {
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        250
     }
     
 }
