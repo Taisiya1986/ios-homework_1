@@ -1,49 +1,51 @@
 import UIKit
-
 class ProfileHeaderView: UIView {
-
-    let avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "pooh")
-        return imageView
+    
+    let mainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
     }()
     
-    let fullNameLebel: UILabel = {
+    let avatarView: UIImageView = {
+        let avatar = UIImageView()
+        avatar.layer.borderWidth = 3
+        avatar.layer.borderColor = UIColor.white.cgColor
+        avatar.image = UIImage(named: "img")
+        return avatar
+    }()
+    
+    let labelName: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .lightGray
-        label.text = "Full name"
+        label.text = "Hipster cat"
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
     }()
     
-    let statusLebel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .lightGray
-        label.text = "Status"
-        return label
-    }()
-    
-    let statusTextField: UITextView = {
-        let textView = UITextView()
-        textView.backgroundColor = .systemGray
-        textView.text = "Some text"
-        return textView
-    }()
-    
-    let setStatusButton: UIButton = {
+    let buttonStatus: UIButton = {
         let button = UIButton()
         button.backgroundColor = .systemBlue
         button.setTitle("Show status", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.layer.cornerRadius = 4
+        button.layer.shadowOffset = CGSize(width: 4, height: 4)
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        button.addTarget(Any?.self, action: #selector(buttonStatusAction), for: .touchUpInside)
         return button
+    }()
+    
+    let labelStatus: UILabel = {
+        let status = UILabel()
+        status.text = "Waiting for something..."
+        status.font = .systemFont(ofSize: 14, weight: .regular)
+        status.textColor = .gray
+        return status
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .systemTeal
-        self.addSubview(avatarImageView)
-        self.addSubview(fullNameLebel)
-        self.addSubview(statusLebel)
-        self.addSubview(statusTextField)
-        self.addSubview(setStatusButton)
         setupView()
     }
     
@@ -52,52 +54,50 @@ class ProfileHeaderView: UIView {
     }
     
     func setupView() {
-        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
-        fullNameLebel.translatesAutoresizingMaskIntoConstraints = false
-        statusLebel.translatesAutoresizingMaskIntoConstraints = false
-        setStatusButton.translatesAutoresizingMaskIntoConstraints = false
-        statusTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(mainView)
+        mainView.addSubview(avatarView)
+        mainView.addSubview(labelName)
+        mainView.addSubview(buttonStatus)
+        mainView.addSubview(labelStatus)
+        
+        mainView.translatesAutoresizingMaskIntoConstraints = false
+        avatarView.translatesAutoresizingMaskIntoConstraints = false
+        labelName.translatesAutoresizingMaskIntoConstraints = false
+        buttonStatus.translatesAutoresizingMaskIntoConstraints = false
+        labelStatus.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 100),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 110),
+            mainView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            mainView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            mainView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            mainView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             
-            fullNameLebel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            fullNameLebel.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            fullNameLebel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 150),
-            fullNameLebel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-            fullNameLebel.heightAnchor.constraint(equalToConstant: 20),
+            avatarView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 16),
+            avatarView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 16),
+            avatarView.widthAnchor.constraint(equalToConstant: 120),
+            avatarView.heightAnchor.constraint(equalToConstant: 120),
             
-            statusLebel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            statusLebel.topAnchor.constraint(equalTo: fullNameLebel.bottomAnchor, constant: 15),
-            statusLebel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 150),
-            statusLebel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-            statusLebel.heightAnchor.constraint(equalToConstant: 20),
+            labelName.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 160),
+            labelName.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 27),
             
-            statusTextField.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            statusTextField.topAnchor.constraint(equalTo: statusLebel.bottomAnchor, constant: 15),
-            statusTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 150),
-            statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            buttonStatus.centerXAnchor.constraint(equalTo: mainView.centerXAnchor),
+            buttonStatus.widthAnchor.constraint(equalTo: mainView.widthAnchor, constant: -32),
+            buttonStatus.heightAnchor.constraint(equalToConstant: 50),
+            buttonStatus.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 152),
             
-            setStatusButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 15),
-            setStatusButton.widthAnchor.constraint(equalToConstant: 350),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 30),
+            labelStatus.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 160),
+            labelStatus.bottomAnchor.constraint(equalTo: buttonStatus.topAnchor, constant: -34)
         ])
-        }
+    }
+    
+    @objc func buttonStatusAction() {
+        print(labelStatus.text ?? "")
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let newButton = UIButton()
-        newButton.backgroundColor = .systemPurple
-        newButton.setTitle("New button", for: .normal)
-        self.addSubview(newButton)
-        newButton.translatesAutoresizingMaskIntoConstraints = false
-        newButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        newButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        avatarView.layer.cornerRadius = avatarView.frame.width / 2
+        avatarView.clipsToBounds = true
     }
     
 }
