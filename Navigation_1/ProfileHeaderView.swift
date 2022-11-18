@@ -1,4 +1,5 @@
 import UIKit
+
 class ProfileHeaderView: UIView {
     
     let mainView: UIView = {
@@ -11,6 +12,7 @@ class ProfileHeaderView: UIView {
         let avatar = UIImageView()
         avatar.layer.borderWidth = 3
         avatar.layer.borderColor = UIColor.white.cgColor
+        avatar.contentMode = .scaleAspectFill
         avatar.image = UIImage(named: "img")
         return avatar
     }()
@@ -36,12 +38,16 @@ class ProfileHeaderView: UIView {
         return button
     }()
     
-    let labelStatus: UILabel = {
-        let status = UILabel()
-        status.text = "Waiting for something..."
-        status.font = .systemFont(ofSize: 14, weight: .regular)
-        status.textColor = .gray
-        return status
+    let textFieldStatus: UITextField = {
+        let textField = UITextField()
+        textField.font = .systemFont(ofSize: 14, weight: .regular)
+        textField.textColor = .gray
+        textField.text = ""
+        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 4
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        return textField
     }()
     
     override init(frame: CGRect) {
@@ -58,13 +64,13 @@ class ProfileHeaderView: UIView {
         mainView.addSubview(avatarView)
         mainView.addSubview(labelName)
         mainView.addSubview(buttonStatus)
-        mainView.addSubview(labelStatus)
+        mainView.addSubview(textFieldStatus)
         
         mainView.translatesAutoresizingMaskIntoConstraints = false
         avatarView.translatesAutoresizingMaskIntoConstraints = false
         labelName.translatesAutoresizingMaskIntoConstraints = false
         buttonStatus.translatesAutoresizingMaskIntoConstraints = false
-        labelStatus.translatesAutoresizingMaskIntoConstraints = false
+        textFieldStatus.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             mainView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -85,13 +91,20 @@ class ProfileHeaderView: UIView {
             buttonStatus.heightAnchor.constraint(equalToConstant: 50),
             buttonStatus.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 152),
             
-            labelStatus.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 160),
-            labelStatus.bottomAnchor.constraint(equalTo: buttonStatus.topAnchor, constant: -34)
+            textFieldStatus.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 160),
+            textFieldStatus.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -16),
+            textFieldStatus.bottomAnchor.constraint(equalTo: buttonStatus.topAnchor, constant: -34),
+            textFieldStatus.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
     @objc func buttonStatusAction() {
-        print(labelStatus.text ?? "")
+        if textFieldStatus.text == "" {
+            textFieldStatus.layer.borderColor = UIColor.red.cgColor
+        } else {
+            textFieldStatus.layer.borderColor = UIColor.black.cgColor
+            print(textFieldStatus.text ?? "")
+        }
     }
     
     override func layoutSubviews() {
