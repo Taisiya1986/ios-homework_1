@@ -6,6 +6,7 @@ class ProfileViewController: UIViewController {
         let table = UITableView()
         table.register(PostTableViewCell.self, forCellReuseIdentifier: "cell")
         table.register(PhotosTableViewCell.self, forCellReuseIdentifier: "cell1")
+        table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     
@@ -18,18 +19,13 @@ class ProfileViewController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         tableView.dataSource = self
         tableView.delegate = self
-        arrayOfPosts = [firstPost, secondPost, thirdPost, fourthPost]
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+        arrayOfPosts = [firstPost, secondPost, thirdPost, fourthPost]
     }
     
 }
@@ -97,7 +93,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 250
+            return 260
         } else {
             return 0
         }
