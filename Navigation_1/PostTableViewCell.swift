@@ -1,10 +1,3 @@
-//
-//  PostTableViewCell.swift
-//  Navigation_1
-//
-//  Created by Таисия Кутявина on 19.10.2022.
-//
-
 import UIKit
 
 class PostTableViewCell: UITableViewCell {
@@ -46,27 +39,6 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    var post: Post1? {
-        didSet {
-            guard let postItem = post else {return}
-            if let authorName = postItem.author {
-                authorLabel.text = authorName
-            }
-            if let descriptionText = postItem.description {
-                descriptionLabel.text = descriptionText
-            }
-            if let img = postItem.imageName {
-                someImageView.image = UIImage(named: img)
-            }
-            if let numberOfLikes = postItem.likes {
-                numberOfLikesLabel.text = "Likes: \(numberOfLikes)"
-            }
-            if let numberOfViews = postItem.views {
-                numberOfViewsLabel.text = "Views: \(numberOfViews)"
-            }
-        }
-    }
-    
     override init(style : UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupContentView()
@@ -91,7 +63,7 @@ class PostTableViewCell: UITableViewCell {
         numberOfViewsLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            authorLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 16),
             authorLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             authorLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
             

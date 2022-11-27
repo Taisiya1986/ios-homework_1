@@ -10,7 +10,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return navigationVC
     }
     
-    func createProfileViewController() -> UINavigationController {
+    func createLogInViewController() -> UINavigationController {
         let navigationVC = UINavigationController(rootViewController: LogInViewController())
         navigationVC.tabBarItem = UITabBarItem(title: "Профиль", image: UIImage(systemName: "person.circle"), tag: 1)
         return navigationVC
@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func createTapBar() -> UITabBarController {
         let tapBar = UITabBarController()
-        tapBar.viewControllers = [createFeedViewController(), createProfileViewController()]
+        tapBar.viewControllers = [createFeedViewController(), createLogInViewController()]
         return tapBar
     }
     

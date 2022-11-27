@@ -2,6 +2,9 @@ import UIKit
 
 class LogInViewController: UIViewController, UIScrollViewDelegate {
     
+    var standardLogin = "taisiya"
+    var standardPassword = "777777"
+    
     let scrollView = UIScrollView()
     
     let contentView = UIView()
@@ -42,6 +45,7 @@ class LogInViewController: UIViewController, UIScrollViewDelegate {
         textField.font = .systemFont(ofSize: 16)
         textField.autocapitalizationType = .none
         textField.isSecureTextEntry = true
+        textField.addTarget(LogInViewController?.self, action: #selector(textFieldWasChanged), for: .editingChanged)
         return textField
     }()
     
@@ -55,9 +59,45 @@ class LogInViewController: UIViewController, UIScrollViewDelegate {
         return button
     }()
     
+    let hiddenLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Количество символов меньше 6"
+        label.textColor = .red
+        label.isHidden = true
+        return label
+    }()
+    
     @objc func buttonAction() {
-        let profileVC = ProfileViewController()
-        self.navigationController?.pushViewController(profileVC, animated: true)
+        if loginTextField.text == "" {
+            loginTextField.layer.backgroundColor = UIColor.red.cgColor
+        } else if passwordTextField.text == "" {
+            passwordTextField.layer.backgroundColor = UIColor.red.cgColor
+        } else {
+            loginTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
+            passwordTextField.layer.backgroundColor = UIColor.systemGray6.cgColor
+            if loginTextField.text == standardLogin && passwordTextField.text == standardPassword {
+                let profileVC = ProfileViewController()
+                self.navigationController?.pushViewController(profileVC, animated: true)
+            } else {
+                let alertController = UIAlertController(title: "Предупреждение", message: "Проверьте логин и пароль", preferredStyle: .alert)
+                let okButton = UIAlertAction(title: "OK", style: .default) { okButton in
+                    print("OK")
+                }
+                alertController.addAction(okButton)
+                present(alertController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    @objc func textFieldWasChanged (_ textField: UITextField) {
+        let textCount = textField.text?.count
+        if let tc = textCount {
+            if tc < 6 {
+                hiddenLabel.isHidden = false
+            } else {
+                hiddenLabel.isHidden = true
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -79,7 +119,7 @@ class LogInViewController: UIViewController, UIScrollViewDelegate {
         NSLayoutConstraint.activate([
             scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
@@ -95,11 +135,13 @@ class LogInViewController: UIViewController, UIScrollViewDelegate {
         contentView.addSubview(loginTextField)
         contentView.addSubview(passwordTextField)
         contentView.addSubview(logInButton)
+        contentView.addSubview(hiddenLabel)
         
         vkImage.translatesAutoresizingMaskIntoConstraints = false
         loginTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         logInButton.translatesAutoresizingMaskIntoConstraints = false
+        hiddenLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             vkImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
@@ -120,7 +162,10 @@ class LogInViewController: UIViewController, UIScrollViewDelegate {
             logInButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
-            logInButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32)
+            logInButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -32),
+            
+            hiddenLabel.leadingAnchor.constraint(equalTo: passwordTextField.leadingAnchor),
+            hiddenLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor)
         ])
     }
     
